@@ -30,7 +30,7 @@ date of death
 highest point
 operator
 director / manager
-headquarters location ['Where is the headquarter of x?']
+headquarters location
 employer
 tributary
 mouth of the watercourse

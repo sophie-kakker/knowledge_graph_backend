@@ -11,6 +11,7 @@ try:
     import logging
     from template_explorer import template_explorer
     from kg_explorer import kg_explorer
+    import helper
 except Exception as e:
     print("Error  :{} ".format(e))
 
@@ -26,13 +27,14 @@ url = "{scheme}://{host_name}:{port}".format(scheme=scheme, host_name=host_name,
 user = "neo4j"
 password = "test"
 kg_explorer = kg_explorer.KGExplorer(url, user, password)
-template_explorer = template_explorer.ElasticTemplateExplorer(kg_explorer,"http://elastic_container:9200")
+template_explorer = template_explorer.ElasticTemplateExplorer(kg_explorer, "http://elastic_container:9200")
 _ = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 mongo_app = mongo_extractor.MongoExtractor("mongodb://mongodb_container:27017/", "ingestion_db", "ingestion_logs")
 celery_app = Celery('celery_app',
                     broker='amqp://admin:mypass@rabbit:5672',
                     backend='mongodb://mongodb_container:27017/mydb')
+
 
 @app.route('/')
 @cross_origin()
@@ -62,9 +64,12 @@ def create_relations():
     return json.dumps(response)
 
 
-@app.route('/get_ingestion_status/<task_id>')
+@app.route('/get_ingestion_status')
 @cross_origin()
-def get_ingestion_status(task_id):
+def get_ingestion_status():
+    task_id = request.args.get("task_id")
+    if task_id is None:
+        Response(json.dumps({'message': 'task id not present in the input'}), status=400, mimetype='application/json')
     task = celery_app.AsyncResult(task_id, app=celery_app)
     if task.ready():
         ingestion_id = task.result['ingestion_id']
@@ -76,24 +81,28 @@ def get_ingestion_status(task_id):
         response = {
             "status": "IN_PROGRESS"
         }
-    return json.dumps(response)
+    return response['status']
 
 
-@app.route('/get_sample_relations/<task_id>')
+@app.route('/get_sample_relations')
 @cross_origin()
-def get_sample_relations(task_id):
+def get_sample_relations():
+    task_id = request.args.get("task_id")
+    if task_id is None:
+        Response(json.dumps({'message': 'task id not present in the input'}), status=400, mimetype='application/json')
     output = mongo_app.get_sample_relations(task_id=task_id)
     if 'task_id' not in output:
         return Response(json.dumps({'message': 'no such task found'}), status=400, mimetype='application/json')
     resp = {'relations': output['relations']}
-    return Response(json.dumps(resp), status=200, mimetype='application/json')
+    return Response(json.dumps(resp['relations']), status=200, mimetype='application/json')
 
 
 @app.route('/add_template', methods=["POST"])
 @cross_origin()
 def add_template():
     data = request.get_json(force=True)
-    template_explorer.ingest_template(relation=data['relation'], template=data['template'])
+    template_explorer.ingest_template(relation=data['relation'], template=data['template'],
+                                      groups=helper.create_groups(data['entity_group']))
     return {"message": "template ingested successfully"}
 
 
@@ -101,5 +110,10 @@ def add_template():
 @cross_origin()
 def search_template():
     data = request.get_json(force=True)
-    return template_explorer.search_template(query=data['query'])
+    return template_explorer.search_template(query=data['question'])
 
+
+@app.route('/get_relation_list')
+@cross_origin()
+def get_relation_list():
+    return Response(json.dumps(template_explorer.get_relation_list()), status=200, mimetype='application/json')

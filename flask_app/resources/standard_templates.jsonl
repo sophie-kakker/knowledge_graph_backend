@@ -4,3 +4,4 @@
 {"relation": "date of birth", "templates": [{"pattern": "what is (.*)\\'s (date of birth|dob)( |)\\?", "groups": [0]}, {"pattern": "when was (.*) born( |)?", "groups": [0]}]}
 {"relation": "place of birth", "templates": [{"pattern": "what is the place of birth of (.*)( |)\\?","groups": [0]}, {"pattern": "where was (.*) born( |)?", "groups": [0]}]}
 {"relation": "date of death", "templates": [{"pattern": "when did (.*) die( |)\\?", "groups": [0]}]}
+{"relation": "sibling", "templates": [{"pattern": "who is the brother of (.*)( |)\\?", "groups": [0]}, {"pattern": "who is the sister of (.*)( |)\\?", "groups": [0]}]}

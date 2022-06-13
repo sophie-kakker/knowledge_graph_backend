@@ -12,10 +12,19 @@ class ElasticTemplateExplorer:
         logging.info(self.es_cluster.info())
         self.create_template_index()
         self.clear_index()
+        self.relation_list = None
         #self.get_index_size()
         self.kg_explorer = kg_explorer
         logging.info("connected to KG explorer successfully")
         self.ingest_standard_templates()
+
+    def get_relation_list(self):
+        if self.relation_list is None:
+            self.relation_list = []
+            with open("resources/triplets_dedup.txt",mode='r',encoding='utf-8') as f:
+                for line in f:
+                    self.relation_list.append(line.strip())
+        return self.relation_list
 
     def clear_index(self, name="template_store"):
         self.es_cluster.indices.delete(index=name, ignore=[400, 404])
