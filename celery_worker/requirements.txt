@@ -1,0 +1,8 @@
+boto3~=1.23.10
+pymongo~=4.1.1
+Flask~=2.0.3
+celery~=5.1.2
+torch~=1.10.2
+transformers~=4.18.0
+wikipedia~=1.4.0
+py2neo~=2021.2.3

@@ -1,0 +1,64 @@
+version: "3.7"
+services:
+  elastic_container:
+    ports:
+      - '9200:9200'
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.17.4'
+    healthcheck:
+      test: "curl -GET http://elastic_container:9200"
+      interval: "1s"
+      timeout: "3s"
+      retries: 60
+
+  flask_app:
+    build: './flask_app'
+    ports:
+      - "8081:8081"
+    depends_on:
+      - rabbit
+      - mongodb_container
+      - elastic_container
+      - neo4j_container
+    command: bash -c "./wait-for-it.sh elastic_container:9200 -t 60 && ./wait-for-it.sh neo4j_container:7687 -t 30 && flask run --host=0.0.0.0 --port=8081"
+
+  rabbit:
+    hostname: rabbit
+    image: "rabbitmq:3-management"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  mongodb_container:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+  neo4j_container:
+    ports:
+      - '7474:7474'
+      - '7687:7687'
+    volumes:
+      - '$HOME/neo4j/data:/data'
+      - '$HOME/neo4j/logs:/logs'
+      - '$HOME/neo4j/import:/var/lib/neo4j/import'
+      - '$HOME/neo4j/plugins:/plugins'
+    environment:
+      - NEO4J_AUTH=neo4j/test
+    image: 'neo4j:latest'
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: celery_worker/Dockerfile
+    user: root
+    depends_on:
+      - rabbit
+      - flask_app
+      - mongodb_container
+      - neo4j_container

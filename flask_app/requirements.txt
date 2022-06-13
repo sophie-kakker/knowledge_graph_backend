@@ -1,0 +1,7 @@
+Flask
+celery[mongodb]
+boto3
+pymongo
+Flask-Cors
+elasticsearch
+py2neo
