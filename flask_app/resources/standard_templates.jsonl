@@ -8,20 +8,20 @@
 {"relation": "capital of", "templates": [{"pattern": "what is the capital of (.*)( |)\\?","groups": [0]}, {"pattern": "(.*) is the capital of which country?", "groups": [0]}]}
 {"relation": "publication date", "templates": [{"pattern": "when was (.*) published( |)\\?", "groups": [0]}]}
 {"relation": "owner of", "templates": [{"pattern": "who is the owner of (.*)( |)\\?", "groups": [0]}]}
-{"relation": "country", "templates": [{"pattern": "which country does () live in( |)\\?", "groups": [0]}, {"pattern": "(.) lives in which country( |)\\?", "groups": [0]}]}
-{"relation": "employer", "templates": [{"pattern": "who is the employer of (.)( |)\\?", "groups": [0]}, {"pattern": "which company does (.) work for( |)\\?", "groups": [0]}]}
-{"relation": "educated at", "templates": [{"pattern": "where did (.) study( |)\\?", "groups": [0]}, {"pattern": "which college did (.) study in( |)\\?", "groups": [0]}]}
-{"relation": "genre", "templates": [{"pattern": "what is the genre of (.)( |)\\?", "groups": [0]}, {"pattern": "which genre does (.) belong to( |)\\?", "groups": [0]}]}
-{"relation": "publisher", "templates": [{"pattern": "who is the publisher of (.)( |)\\?", "groups": [0]}, {"pattern": "which company has published (.)( |)\\?", "groups": [0]}, {"pattern": "(.*) is published by which company( |)\\?", "groups": [0]}]}
-{"relation": "place of burial", "templates": [{"pattern": "where was (.) buried( |)\\?", "groups": [0]}, {"pattern": "which place was (.) buried at( |)\\?", "groups": [0]}]}
-{"relation": "religion", "templates": [{"pattern": "what is the religion of (.)( |)\\?", "groups": [0]}, {"pattern": "which religion does (.) belong to( |)\\?", "groups": [0]}]}
+{"relation": "country", "templates": [{"pattern": "which country does (.*) live in( |)\\?", "groups": [0]}, {"pattern": "(.*) lives in which country( |)\\?", "groups": [0]}]}
+{"relation": "employer", "templates": [{"pattern": "who is the employer of (.*)( |)\\?", "groups": [0]}, {"pattern": "which company does (.*) work for( |)\\?", "groups": [0]}]}
+{"relation": "educated at", "templates": [{"pattern": "where did (.*) study( |)\\?", "groups": [0]}, {"pattern": "which college did (.*) study in( |)\\?", "groups": [0]}]}
+{"relation": "genre", "templates": [{"pattern": "what is the genre of (.*)( |)\\?", "groups": [0]}, {"pattern": "which genre does (.*) belong to( |)\\?", "groups": [0]}]}
+{"relation": "publisher", "templates": [{"pattern": "who is the publisher of (.*)( |)\\?", "groups": [0]}, {"pattern": "which company has published (.*)( |)\\?", "groups": [0]}, {"pattern": "(.*) is published by which company( |)\\?", "groups": [0]}]}
+{"relation": "place of burial", "templates": [{"pattern": "where was (.*) buried( |)\\?", "groups": [0]}, {"pattern": "which place was (.*) buried at( |)\\?", "groups": [0]}]}
+{"relation": "religion", "templates": [{"pattern": "what is the religion of (.*)( |)\\?", "groups": [0]}, {"pattern": "which religion does (.*) belong to( |)\\?", "groups": [0]}]}
 {"relation": "country of citizenship", "templates": [{"pattern": "(.*) is a citizen of which country( |)\\?", "groups": [0]}]}
-{"relation": "founded by", "templates": [{"pattern": "who founded ()( |)\\?", "groups": [0]}, {"pattern": "who is the founder of (.)( |)\\?", "groups": [0]}]}
-{"relation": "start time", "templates": [{"pattern": "when does () start( |)\\?", "groups": [0]}, {"pattern": "what times does (.) start( |)\\?", "groups": [0]}]}
-{"relation": "end time", "templates": [{"pattern": "when does () end( |)\\?", "groups": [0]}, {"pattern": "what times does (.) end( |)\\?", "groups": [0]}]}
-{"relation": "author", "templates": [{"pattern": "who wrote ()( |)\\?", "groups": [0]}, {"pattern": "who is the author of (.)( |)\\?", "groups": [0]}]}
+{"relation": "founded by", "templates": [{"pattern": "who founded (.*)( |)\\?", "groups": [0]}, {"pattern": "who is the founder of (.*)( |)\\?", "groups": [0]}]}
+{"relation": "start time", "templates": [{"pattern": "when does (.*) start( |)\\?", "groups": [0]}, {"pattern": "what times does (.*) start( |)\\?", "groups": [0]}]}
+{"relation": "end time", "templates": [{"pattern": "when does (.*) end( |)\\?", "groups": [0]}, {"pattern": "what times does (.*) end( |)\\?", "groups": [0]}]}
+{"relation": "author", "templates": [{"pattern": "who wrote (.*)( |)\\?", "groups": [0]}, {"pattern": "who is the author of (.*)( |)\\?", "groups": [0]}]}
 {"relation": "member of political party", "templates": [{"pattern": "which party does (*) belong to( |)\\?", "groups": [0]}]}
-{"relation": "occupation", "templates": [{"pattern": "what does () do( |)\\?", "groups": [0]}, {"pattern": "what is the occupation of (.)( |)\\?", "groups": [0]}]}
+{"relation": "occupation", "templates": [{"pattern": "what does (.*) do( |)\\?", "groups": [0]}, {"pattern": "what is the occupation of (.*)( |)\\?", "groups": [0]}]}
 {"relation": "made from material", "templates": [{"pattern": "which material is (*) made from( |)\\?", "groups": [0]}]}
-{"relation": "member of sports team", "templates": [{"pattern": "what team does () play for( |)\\?", "groups": [0]}, {"pattern": "(.) is a member of which sports team( |)\\?", "groups": [0]}]}
-{"relation": "director", "templates": [{"pattern": "who directed ()( |)\\?", "groups": [0]}, {"pattern": "who is the director of (.)( |)\\?", "groups": [0]}]}
+{"relation": "member of sports team", "templates": [{"pattern": "what team does (.*) play for( |)\\?", "groups": [0]}, {"pattern": "(.*) is a member of which sports team( |)\\?", "groups": [0]}]}
+{"relation": "director", "templates": [{"pattern": "who directed (.*)( |)\\?", "groups": [0]}, {"pattern": "who is the director of (.*)( |)\\?", "groups": [0]}]}
