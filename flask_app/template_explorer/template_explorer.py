@@ -54,8 +54,24 @@ class ElasticTemplateExplorer:
         doc_id = hashlib.md5(template.encode('utf-8')).hexdigest()
         self.es_cluster.index(index=index, body=doc, id=doc_id)
 
+    def get_templates(self, relation: str, index="template_store"):
+        search_query = {
+            "from": 0,
+            "size": 4,
+            "query": {
+                "match_phrase": {
+                    "relation": relation
+                }
+            }
+        }
+        res = self.es_cluster.search(index=index, body=search_query)
+        templates = []
+        if len(res['hits']['hits']) > 0:
+            for temp in res['hits']['hits']:
+                templates.append(temp['_source']['template'])
+        return templates
+
     def search_template(self, query: str, index="template_store"):
-        query = query.lower()
         search_query = {
             "from": 0,
             "size": 2,

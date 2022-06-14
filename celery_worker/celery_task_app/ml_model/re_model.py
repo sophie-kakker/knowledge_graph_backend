@@ -32,11 +32,11 @@ class RelationExtractionModel:
                                                      "ingestion_logs")
         logging.info("connected to mongo logger successfully")
 
-    def process_data(self, text: str, verbose=False):
+    def process_data(self, text: str, verbose=True):
         # Plan
         # Create KB out of it
         # Iterate over KB to ingest relations
-        kb = self.from_text_to_kb(text.lower())
+        kb = self.from_text_to_kb(text)
         relations = kb.relations
         count = 0
         ingestion_id = self.mongo_logger.push_sample_relations(relations)

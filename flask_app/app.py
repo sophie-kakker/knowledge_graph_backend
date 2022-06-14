@@ -61,7 +61,7 @@ def create_relations():
         "task_id": result.id
     }
     app.logger.info(result.backend)
-    return json.dumps(response)
+    return json.dumps(response['task_id'])
 
 
 @app.route('/get_ingestion_status')
@@ -117,3 +117,11 @@ def search_template():
 @cross_origin()
 def get_relation_list():
     return Response(json.dumps(template_explorer.get_relation_list()), status=200, mimetype='application/json')
+
+
+@app.route('/get_template')
+@cross_origin()
+def get_templates():
+    relation = request.args.get("relation")
+    templates = template_explorer.get_templates(relation=relation)
+    return Response(json.dumps(templates), status=200, mimetype='application/json')

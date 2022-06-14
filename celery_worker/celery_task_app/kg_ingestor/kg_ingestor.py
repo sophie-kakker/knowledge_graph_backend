@@ -14,29 +14,32 @@ class KGIngestor:
     def transform_relation(self, relation):
         return relation.replace(" ", "_")
 
-    def create_unique_constraint(self,graph_name=None):
+    def create_unique_constraint(self, graph_name=None):
         if graph_name is None:
             self.default_graph.run("CREATE CONSTRAINT IF NOT EXISTS ON (x:ENTITY) ASSERT x.name IS UNIQUE")
         else:
             self.graph_service[graph_name].run("CREATE CONSTRAINT IF NOT EXISTS ON (x:ENTITY) ASSERT x.name IS UNIQUE")
 
     def create_relationship(self, node1, relation, node2, graph_name=None):
-        if graph_name == None:
-            graph = self.graph_service.default_graph
-        else:
-            if graph_name not in self.graph_service:
-                logging.error("Graph: {graph_name} does not exist."
-                              " Please create the graph first.".format(graph_name=graph_name))
-                return False
+        try:
+            if graph_name == None:
+                graph = self.graph_service.default_graph
             else:
-                graph = self.default_graph
-        tx = graph.begin()
-        node1 = self._get_or_create_node(tx, node1)
-        node2 = self._get_or_create_node(tx, node2)
-        relation = self.transform_relation(relation)
-        n1n2 = Relationship(node1, relation, node2)
-        tx.create(n1n2)
-        tx.commit()
+                if graph_name not in self.graph_service:
+                    logging.error("Graph: {graph_name} does not exist."
+                                  " Please create the graph first.".format(graph_name=graph_name))
+                    return False
+                else:
+                    graph = self.default_graph
+            tx = graph.begin()
+            node1 = self._get_or_create_node(tx, node1)
+            node2 = self._get_or_create_node(tx, node2)
+            relation = self.transform_relation(relation)
+            n1n2 = Relationship(node1, relation, node2)
+            tx.create(n1n2)
+            tx.commit()
+        except Exception as e:
+            logging.error(f"failed to ingest relation {node1} -{relation}-> {node2} error: {e}")
 
     def _get_node(self, node_name, node_label="ENTITY", graph_name=None):
         if graph_name is not None:
@@ -86,7 +89,7 @@ class KGIngestor:
         match_output = relation_matcher.match((node1, node2))
         return type(match_output.first()).__name__
 
-    def find_relation_tail(self,n1,relation, graph_name=None):
+    def find_relation_tail(self, n1, relation, graph_name=None):
         if graph_name is not None:
             relation_matcher = self.get_relation_matcher(graph_name)
         else:
@@ -97,4 +100,3 @@ class KGIngestor:
             return
         relationship = list(relation_matcher.match([node1], r_type=self.transform_relation(relation)))
         return relationship[0]
-
