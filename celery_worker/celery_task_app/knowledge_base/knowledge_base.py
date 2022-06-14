@@ -36,20 +36,20 @@ class KnowledgeBase:
 
     def add_relation(self, r):
         # check on wikipedia
-        candidate_entities = [r["head"], r["tail"]]
-        entities = [self.get_wikipedia_data(ent) for ent in candidate_entities]
+        #candidate_entities = [r["head"], r["tail"]]
+        #entities = [self.get_wikipedia_data(ent) for ent in candidate_entities]
 
         # if one entity does not exist, stop
-        if any(ent is None for ent in entities):
-            return
+        #if any(ent is None for ent in entities):
+         #   return
 
         # manage new entities
-        for e in entities:
-            self.add_entity(e)
+        #for e in entities:
+        #    self.add_entity(e)
 
         # rename relation entities with their wikipedia titles
-        r["head"] = entities[0]["title"]
-        r["tail"] = entities[1]["title"]
+        #r["head"] = entities[0]["title"]
+        #r["tail"] = entities[1]["title"]
 
         # manage new relation
         if not self.exists_relation(r):

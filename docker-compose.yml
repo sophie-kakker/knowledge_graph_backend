@@ -22,7 +22,7 @@ services:
       - mongodb_container
       - elastic_container
       - neo4j_container
-    command: bash -c "./wait-for-it.sh elastic_container:9200 -t 60 && ./wait-for-it.sh neo4j_container:7687 -t 30 && flask run --host=0.0.0.0 --port=8081"
+    command: bash -c "./wait-for-it.sh elastic_container:9200 -t 60 && ./wait-for-it.sh neo4j_container:7687 -t 60 && flask run --host=0.0.0.0 --port=8081"
 
   rabbit:
     hostname: rabbit

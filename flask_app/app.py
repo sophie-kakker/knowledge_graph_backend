@@ -110,7 +110,12 @@ def add_template():
 @cross_origin()
 def search_template():
     data = request.get_json(force=True)
-    return template_explorer.search_template(query=data['question'])
+    try:
+        answer = template_explorer.search_template(query=data['question'])
+    except Exception as e:
+        logging.error(f"{e}")
+        return Response(json.dumps("sorry I am not sure about that"), status=200, mimetype='application/json')
+    return Response(json.dumps(answer['answer']), status=200, mimetype='application/json')
 
 
 @app.route('/get_relation_list')

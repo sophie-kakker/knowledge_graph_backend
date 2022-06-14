@@ -11,9 +11,9 @@ class ElasticTemplateExplorer:
         logging.info("Elastic cluster client created")
         logging.info(self.es_cluster.info())
         self.create_template_index()
-        self.clear_index()
+        #self.clear_index()
         self.relation_list = None
-        #self.get_index_size()
+        self.get_index_size()
         self.kg_explorer = kg_explorer
         logging.info("connected to KG explorer successfully")
         self.ingest_standard_templates()
@@ -87,7 +87,7 @@ class ElasticTemplateExplorer:
             entity = self.extract_entity(template_obj['template'], template_obj['groups'], query)
             answer = self.kg_explorer.find_relation_tail(entity, template_obj['relation'])
             return {"answer": answer}
-        return {"message": "no matching template found"}
+        return {"answer": "sorry I don't know about that"}
 
     def extract_entity(self, template,groups, query):
         p = re.compile(template)
